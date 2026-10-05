@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article>
+  {{ if .Section }}<nav aria-label="Back to section"><a href="{{ printf "%s/" .Section | relURL }}">&larr; Back to {{ .Section | humanize }}</a></nav>{{ end }}
+  <header>
+    {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "January 02, 2006" }}</time>
+    {{ with .Params.tags }}<nav aria-label="Tags"><ul>{{ range . }}<li><a href="{{ printf "tags/%s/" (. | urlize) | relURL }}" class="button">{{ . }}</a></li>{{ end }}</ul></nav>{{ end }}
+    {{ with .Params.categories }}<nav aria-label="Categories"><ul>{{ range . }}<li><a href="{{ printf "categories/%s/" (. | urlize) | relURL }}" class="button">{{ . }}</a></li>{{ end }}</ul></nav>{{ end }}
+  </header>
+  {{ if and (or .Params.toc .Site.Params.toc) (ne .Params.toc false) }}<nav aria-label="Table of Contents">{{ .TableOfContents }}</nav>{{ end }}
+  {{ .Content }}
+</article>
+{{ end }}

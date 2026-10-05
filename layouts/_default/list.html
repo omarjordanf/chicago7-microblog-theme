@@ -1,0 +1,13 @@
+{{ define "main" }}
+<section>
+  <header><h1>{{ .Title }}</h1></header>
+  {{ with .Content }}{{ . }}{{ end }}
+  <section class="grid posts">
+    {{ range .Paginator.Pages }}
+      <time datetime="{{ .Date.Format "2006-01-02" }}" class="meta">{{ .Date.Format "Jan 02, 2006" }}</time>
+      <a href="{{ .RelPermalink }}">{{ if .Title }}{{ .Title }}{{ else }}{{ .Summary | plainify | truncate 100 }}{{ end }}</a>
+    {{ end }}
+  </section>
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}

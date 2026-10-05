@@ -1,0 +1,16 @@
+{{ define "main" }}
+<section>
+  {{ with .Content }}{{ . }}{{ end }}
+  {{ $posts := where .Site.RegularPages "Type" "post" }}
+  <section class="posts">
+    {{ range (.Paginate $posts).Pages }}
+    <article>
+      {{ if .Title }}<h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>{{ end }}
+      <div>{{ .Content }}</div>
+      <p class="meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Jan 02, 2006" }}</time>{{ with .Params.categories }} · {{ range $i, $category := . }}{{ if $i }}, {{ end }}<a href="{{ printf "categories/%s/" ($category | urlize) | relURL }}">{{ $category }}</a>{{ end }}{{ end }}</p>
+    </article>
+    {{ end }}
+  </section>
+  {{ partial "pagination.html" . }}
+</section>
+{{ end }}
